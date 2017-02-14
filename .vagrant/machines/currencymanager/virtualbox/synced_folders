@@ -1,0 +1,1 @@
+{"virtualbox":{"/home/vagrant/currencymanager":{"type":null,"mount_options":[],"guestpath":"/home/vagrant/currencymanager","hostpath":"/home/nadeem/CCode/CurrencyManager","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"/home/nadeem/CCode/CurrencyManager","disabled":false,"__vagrantfile":true}}}

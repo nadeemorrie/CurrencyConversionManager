@@ -1,8 +1,6 @@
 # Currency Conversion Manager
 
 ### PHP Framework: Laravel 5.4 
-https://laravel.com/docs/5.4/installation
-Donwload/Installing instructions, https://laravel.com/docs/5.4/configuration
 
 ### Server Requirements
 
@@ -18,10 +16,6 @@ Tokenizer PHP Extension
 XML PHP Extension
 
 
-### Laravel Homestead
-If you want to setup a quick server with all of the above installed you can try this virtual server, Laravel Homestead.
+### Laravel Homestead - (virtual machine)
+If you want to setup a quick server with all of the above installed you can try Laravel Homestead.
 Setup instructions, https://laravel.com/docs/5.4/homestead
-
-
-
-
