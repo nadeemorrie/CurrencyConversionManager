@@ -14,3 +14,10 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::resource('/order', 'Order\BuyCurrencyController');
+
+/*
+API implicit controllers
+*/
+Route::controller('/api/currency', 'Api\CurrencyController');
