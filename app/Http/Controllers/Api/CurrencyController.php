@@ -18,7 +18,6 @@ class CurrencyController extends Controller
      */
     public function getIndex()
     {
-        // $athleteCategories = ResultAthleteCategory::orderBy('rank')->get();
         $currencies = Currency::get();
 
         return $currencies;

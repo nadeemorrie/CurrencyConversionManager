@@ -18,7 +18,7 @@ class CreateOrderTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('customer_id');            
-            $table->smallInteger('rate_id');  
+            $table->unsignedSmallInteger('rate_id');  
             $table->double('amount', 15,8);  
             $table->double('surcharge', 15,8);  
             $table->double('total', 15,8);  

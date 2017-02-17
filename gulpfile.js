@@ -15,6 +15,7 @@ elixir(function(mix) {
     mix.sass('app.scss');
 
     mix.scripts([
-        'angular.min.js'        
+        'angular.js',     
+        'underscore.js'        
     ]);
 });

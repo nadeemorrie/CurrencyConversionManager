@@ -18,17 +18,19 @@
 		</div>
 	</div>
 
-  <div class="form-group">
+  <div class="form-group @{{data.hasFullname()}}">
     <label for="inputFullName" class="col-sm-2 control-label">Full Name</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control" id="inputFullName" placeholder="Full Name">
+    <div class="col-sm-10">      
+      <input type="text" class="form-control" ng-model="data.fullname"
+      id="inputFullName" placeholder="Full Name">
     </div>
   </div>
 
-  <div class="form-group">
+  <div class="form-group @{{data.hasEmail()}}">
     <label for="inputEmail" class="col-sm-2 control-label">Email</label>
     <div class="col-sm-10">
-      <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+      <input type="email" class="form-control" ng-model="data.email" 
+      id="inputEmail" placeholder="Email">
     </div>
   </div>  
 
@@ -46,22 +48,22 @@
 		<label for="inputCurrency" class="col-sm-2 control-label">Buy Currency</label>
 		
 		<div class="col-sm-10">
-			<select class="form-control" id="inputCurrency" ng-model="selectedCurrency">
-			    <option value="">Select currency</option>
-			    <option ng-repeat="item in currencies" value="@{{item.id}}">@{{item.name}}</option>		    
+			<select class="form-control" name="inputCurrency" id="inputCurrency" 
+			     ng-options="option.name for option in data.options track by option.id" 
+				 ng-model="data.selectedOption">			    
 			</select>
 		</div>
 	</div>
 
 	<div class="form-group">
-		<label for="buyIn" class="col-sm-2 control-label">Buy in:</label>
+		<label for="buyIn" class="col-sm-2 control-label">Purchase amount:</label>
 		
 		<div class="col-sm-10">
 			<label class="radio-inline">
-			  <input type="radio" name="buyIn" id="buyInDefaultCurrency" value="option1"> USD
+			  <input type="radio" name="buyIn" id="buyInDefaultCurrency" value="baseCurrency">USD
 			</label>
 			<label class="radio-inline">
-			  <input type="radio" name="buyIn" id="buyInForeignCurrency" value="option2"> @{{currencies[selectedCurrency]}}
+			  <input type="radio" name="buyIn" id="buyInForeignCurrency" value="foreignCurrency">Foreign Currency (@{{data.selectedOption.name}})
 			</label>			
 		</div>
 	</div>
@@ -71,10 +73,10 @@
 
 	<div class="form-group">
 		
-		<label for="inputBuyAmount" class="col-sm-2 control-label">Buy Amount (USD)</label>
+		<label for="inputBuyAmount" class="col-sm-2 control-label"></label>
 		
 		<div class="col-sm-10">			
-			<input type="text" class="form-control" id="inputBuyAmount" placeholder="USD">
+			<input type="number" class="form-control" id="inputBuyAmount" ng-model="data.amount">
 		</div>
 	</div>
 	<div class="form-group">
@@ -82,7 +84,7 @@
 			
 		</div>
 		<div class="col-sm-10">
-			<button type="submit" class="btn btn-primary">Proceed</button>
+			<button type="submit" class="btn btn-primary" ng-disabled="data.validateFields()">Proceed</button>
 		</div>
 	</div>
 			
