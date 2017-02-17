@@ -18,10 +18,10 @@ class CreateRatesTable extends Migration
 
         Schema::create('rates', function (Blueprint $table) {
             $table->smallIncrements('id');
-            $table->unsignedSmallInteger('currency_id');
-            $table->float('exchange', 8,8);
-            $table->float('surcharge', 8,8);
-            $table->float('surcharge_percent', 8,8);            
+            $table->unsignedInteger('currency_id')->unique();
+            $table->double('exchange');
+            $table->double('surcharge');
+            $table->double('surcharge_percent');            
             $table->timestamps();
             
             $table->foreign('currency_id')->references('id')->on('currency');

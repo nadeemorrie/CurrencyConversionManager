@@ -11,7 +11,9 @@
 			<title>Currency Manager</title>	
         	<link rel="stylesheet" href="{{url('css/app.css')}}">        	
         	<script src="{{url('js/all.js')}}"></script>
-            <script>var baseurl="{{url('')}}";</script>   
+            <script>
+                var baseurl="{{url('')}}", csrfToken="{{csrf_token()}}";;
+            </script>   
     </head>
     <body>
     	<div class="container">

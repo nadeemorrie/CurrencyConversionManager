@@ -2,24 +2,14 @@
 
 namespace App\Classes\Abstracts;
 
-abstract class Order {
+abstract class Order {	
+	protected $exchangeRate;	
+	protected $foreignAmount;
+	protected $baseAmount;	
+	protected $surchargeRate;
+	protected $total;		
 
-	protected $baseCurrency;
-	protected $exchangeCurrency;
-	protected $exchangeRate;
-	protected $buyAmount;
-	protected $convertedAmount;
-
-	protected abstract function getTotalCost();
-
-	/**
-     * Set the default purchase currency. default is USD.
-     *
-     * @param  base currency code.          
-     */
-	protected function setDefaultBaseCurrencyCode($baseCurrency) {
-		$this->baseCurrency = $baseCurrency; 
-	}
+	protected abstract function getCost($buyAmount, $isForeign);
 
 	/**
      * Get the exchange rate amount for conversion
@@ -38,42 +28,92 @@ abstract class Order {
 	protected function setExchangeRate($exchangeRate) {
 		return $this->exchangeRate = $exchangeRate;
 	}
-
+	
 	/**
-     * Get the buy amount 
-     *     
-     * @return decimal
+     * Calculate surchage amount using the surcharge rate.
+     *            
+     * @return int 
      */
-	protected function getBuyAmount() {
-		return $this->buyAmount;
+	protected function getSurchageAmount() {		
+		return $this->baseAmount * $this->surchargeRate;
 	}
 
 	/**
-     * Set the buy amount 
-     *
-     * @param decimal
+	 * Set the base amount.
+     * Determine if the base amount must be converted from
+     * a foreign input amount to the base currency. i.e ZAR to USD.
+     * @param int $buyAmount 
+     * @param bool $isForeign           
      */
-	protected function setBuyAmount($amount) {
-		$this->buyAmount = $amount;
+	protected function setAmount($buyAmount, $isForeign) {		
+		if ($isForeign)
+			return $this->convertToBaseCurrencyAmount($buyAmount);
+
+		return $this->setBaseAmount($buyAmount);
 	}
 
 	/**
-     * Calculate the converted amount 
-     *
-     * @return decimal
+     * Convert amount from foreign to base currency amount. i.e ZAR to USD
+     *            
+     * @return int 
      */
-	protected function getConvertedAmount() {
-		$this->setConvertedAmount();
-		return $this->convertedAmount;
+	protected function convertToBaseCurrencyAmount($amount) {		
+		$this->baseAmount = $amount / $this->exchangeRate;
 	}
 
 	/**
-     * Calculate the converted amount 
+     * Convert from base currency to foreign amount i.e USD to ZAR
      *
      * @return string
      */
-	protected function setConvertedAmount () {
-		$this->convertedAmount = $this->buyAmount * $this->exchangeRate;
+	protected function convertToForeignCurrencyAmount ($amount) {
+		return $amount * $this->exchangeRate;
+	}
+
+	/**
+     * Set base amount
+     *            
+     * @return int 
+     */
+	protected function setBaseAmount($amount) {		
+		$this->baseAmount = $amount;
+	}
+
+	/**
+     * Get the base amount 
+     *
+     * @param decimal
+     */
+	protected function getBaseAmount() {
+		return $this->baseAmount;
+	}
+
+	/**
+     * Get the foreign amount 
+     *
+     * @return decimal
+     */
+	protected function getForeignAmount($amount) {			
+		return $this->foreignAmount = $this->convertToForeignCurrencyAmount($amount);
+		
+	}
+
+	/**
+     * Set the total amount to be paid.
+     *            
+     * @return int 
+     */
+	protected function setTotal($amount) {		
+		$this->total = $amount;
+	}
+
+	/**
+     * Get the total amount to be paid.
+     *            
+     * @return int 
+     */
+	protected function getTotal() {			
+		return $this->total;
 	}
 }
 

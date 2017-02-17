@@ -20,23 +20,27 @@ var app = angular.module('myApp', []);
 
 app.controller('orderController', function($scope, $http, $location, $timeout) {	
 	$scope.data = {
-		amount : 0,
-		fullname : '',
-		email : '',
+		amount : 100,
+		fullname : 'nadeem orrie',
+		email : 'nadeem.orrie@gmail.com',
+		isForeign : '',
 		currencies : null,
+		exchangeRate : 0,
 		options : [],
 		buttonDisabled : false,
 		selectedOption : {id:0, name:'Select a currency'},
 		selectedCurrencyName : null,
 		validateFields : function () {
 			this.buttonDisabled=false;
-			this.isSelected();
+			this.hasCurrency();
 			this.hasFullname();
 			this.hasEmail();
+			this.hasPurchaseType();
+			this.hasAmount();
 
 			return this.buttonDisabled;
 		},
-		isSelected : function () {
+		hasCurrency : function () {
 			if (this.selectedOption.name=='Select a currency') {
 				this.buttonDisabled=true;
 			}			
@@ -54,7 +58,38 @@ app.controller('orderController', function($scope, $http, $location, $timeout) {
 				return 'has-error';
 			}
 			return '';
+		},
+		hasPurchaseType : function () {
+			if (this.isForeign=='') {
+				this.buttonDisabled=true;
+				return 'has-error';
+			}
+			return '';
+		},
+		hasAmount : function () {
+			if (!angular.isNumber(this.amount)) {
+				this.buttonDisabled=true;
+				return 'has-error';
+			}
+			return '';
+		},
+		calculateCurrency : function () {
+			$http({
+			  method: 'POST',			  
+			  url: baseurl+'/api/currency/convert',
+			  data : {
+			  	_token: csrfToken,			  	
+			  	amount : this.amount,
+			  	isForeign : this.isForeign
+			  }
+			}).then(function successCallback(response) {
+				// alert(response.data);
+				$scope.data.exchangeRate = response.data.exchangeRate;				
+			  }, function errorCallback(response) {
+				alert('error');
+			  });
 		}
+
 	}
 	
 	loadList();
@@ -79,19 +114,5 @@ app.controller('orderController', function($scope, $http, $location, $timeout) {
 
 
 	
-	// function getCurrencyName (selectedId) {
-		
-	// 	var needle = Object.create({id: 2});
-		
-	// 	var result = _.findWhere($scope.currencies, needle);
-
-	// 	console.log('needle?',needle, 'result', result);
-
-	// 	if (_.isObject(result))
-	// 		return result.code;
-		
-	// 	// return error for now.
-	// 	return "error";
-	// }
 });
 
