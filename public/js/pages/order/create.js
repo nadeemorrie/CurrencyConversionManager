@@ -32,6 +32,7 @@ app.controller('orderController', function($scope, $http, $location, $timeout) {
 		isForeign : '',
 		currencies : null,
 		exchangeRate : 0,
+		hideBuyDiv: true,
 		options : [],
 		buttonDisabled : false,		
 		selectedOption : { id:0, currencyName:selectDefaultText},
@@ -43,7 +44,7 @@ app.controller('orderController', function($scope, $http, $location, $timeout) {
 			this.hasEmail();
 			this.hasPurchaseType();
 			this.hasAmount();
-
+			
 			return this.buttonDisabled;
 		},
 		hasCurrency : function () {
@@ -79,6 +80,9 @@ app.controller('orderController', function($scope, $http, $location, $timeout) {
 			}
 			return '';
 		},
+		setHideBuyDiv : function (val) {			
+			this.hideBuyDiv=val;
+		},
 		calculateCurrency : function () {
 			$http({
 			  method: 'POST',			  
@@ -88,18 +92,42 @@ app.controller('orderController', function($scope, $http, $location, $timeout) {
 			  	amount : this.amount,
 			  	isForeign : this.isForeign,
 			  	exchangeRate : this.selectedOption.exchangeRate,
-			  	surchargeRate : this.selectedOption.surchargeRate
+			  	surchargeRate : this.selectedOption.surchargeRate,			  		  	
 			  }
-			}).then(function successCallback(response) {				
+			}).then(function successCallback(response) {
+				$scope.data.setHideBuyDiv(false);
 				$scope.data.surcharge = response.data.surcharge;				
 				$scope.data.cost = response.data.cost;				
 				$scope.data.total = response.data.total;				
 				$scope.data.foreignAmount = response.data.foreignAmount;				
 			  }, function errorCallback(response) {
-				console.log('Convert api call failed');
+			  	$scope.data.setHideBuyDiv(true);
+				alert('Convert api call failed');
 			  });
 		}
-
+		// storeOrder : function () {
+		// 	$http({
+		// 	  method: 'POST',			  
+		// 	  url: baseurl+'/order',
+		// 	  data : {
+		// 	  	_token: csrfToken,			  	
+		// 	  	isForeign : this.isForeign,
+		// 	  	exchangeRate : this.selectedOption.exchangeRate,
+		// 	  	surchargeRate : this.selectedOption.surchargeRate,			  		  	
+		// 		rateId : this.selectedOption.id,
+		// 	  	surcharge : this.surcharge,
+		// 		cost : this.cost,				
+		// 		total : this.total,
+		// 		foreignAmount : this.foreignAmount,
+		// 		customerName : this.fullname,
+		// 		customerEmail : this.email
+		// 	  }
+		// 	}).then(function successCallback(response) {
+		// 		console.log('Store order success');							
+		// 	  }, function errorCallback(response) {			  	
+		// 		console.log('Store api call failed');
+		// 	  });
+		// }		
 	}
 	
 	loadList();

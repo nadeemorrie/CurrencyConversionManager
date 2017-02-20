@@ -42,7 +42,7 @@ class CurrencyController extends Controller
      * @return model
      */
     public function postConvert(Request $request)
-    {
+    {        
         // Fetch form inputs
         $inputAmount=$request->amount;
         $isForeign = $request->isForeign === 'true' ? true: false;
@@ -73,7 +73,7 @@ class CurrencyController extends Controller
                 'foreignAmount'=>$foreignAmount,              
                 'cost'=>$baseAmount,
                 'surcharge'=>$surcharge,
-                'total'=>$total                
+                'total'=>$total
             ]);
     }
 

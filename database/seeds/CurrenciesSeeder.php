@@ -75,7 +75,7 @@ class CurrenciesSeeder extends Seeder
         $ratesArray = [[
                     'currency_id' => 1,
                     'exchange' => '13.0947',
-                    'surcharge' => 2,
+                    'surcharge' => 0.02,
                     'surcharge_percent' => 2
                 ], [
                     'currency_id' => 2,
@@ -90,13 +90,13 @@ class CurrenciesSeeder extends Seeder
                 ],[
                     'currency_id' => 4,
                     'exchange' => 103.538,
-                    'surcharge' => 0.02,
+                    'surcharge' => 0.2,
                     'surcharge_percent' => 2
                 ],[
                     'currency_id' => 5,
                     'exchange' => 10.0947,
-                    'surcharge' => 2,
-                    'surcharge_percent' => 2
+                    'surcharge' => 0.06,
+                    'surcharge_percent' => 6
                 ], [
                     'currency_id' => 6,
                     'exchange' => 2,
@@ -110,91 +110,11 @@ class CurrenciesSeeder extends Seeder
                 ],[
                     'currency_id' => 8,
                     'exchange' => 50.56,
-                    'surcharge' => 0.02,
-                    'surcharge_percent' => 2
+                    'surcharge' => 0.03,
+                    'surcharge_percent' => 3
                 ]];
 
         DB::table('rates')->insert($ratesArray);
-/*
-        DB::table('currency')->insert([
-                    'code' => $code,
-                    'symbol' => $data['symbol'],
-                    'name' => $data['name'],
-                ]);
 
-        foreach ($currencyArray as $data) {
-            $code = $data['code'];
-
-            $currencyRow = DB::table('currency')->where('code', $code)->first();
-
-            $currencyId="";
-
-            if ($currencyRow==null) {
-                DB::table('currency')->insert([
-                    'code' => $code,
-                    'symbol' => $data['symbol'],
-                    'name' => $data['name'],
-                ]);
-
-                $currencyId = DB::table('currency')->max('id');
-
-                $surcharge = rand(500, 1000) / 100;
-                $surchargePercent = rand(0,100);
-
-                DB::table('rates')->insert([
-                    'currency_id' => $currencyId,
-                    'exchange' => rand(50, 100) / 100,
-                    'surcharge' => $surcharge,
-                    'surcharge_percent' => $surchargePercent,
-                ]);
-
-            }
-
-            $customerArray = [[
-                'name'=>'Nadeem Orrie',                
-                'email'=>'nadeem@gmail.com'
-            ], [
-                'name'=>'Sarah Adamse',                
-                'email'=>'sara@gmail.com'
-            ]];
-
-            foreach ($customerArray as $person) {
-
-                // $rateId = DB::table('rates')->max('id');
-
-                $personName = $person["name"];
-                $email = $person["email"];
-
-                $customerRow = DB::table('customers')->where('email', $email)->first();
-
-                if ($customerRow==null) {
-                    DB::table('customers')->insert([
-                        'name' => $personName,
-                        'email' => $email,            
-                    ]);
-                }
-
-                $customerRow = DB::table('customers')->where('email', $email)->first();
-                $customerId = $customerRow->id;
-
-                $rateId = DB::table('rates')->max('id');
-                $ratesRow = DB::table('rates')->where('id', $rateId)->first();
-                $tempSurcharge = $ratesRow->surcharge;
-
-                $purchaseAmount  = mt_rand(2000000,4000000);
-                $surchargeAmount = $purchaseAmount * ($tempSurcharge/100);
-                $total = $purchaseAmount+$surchargeAmount;
-
-                DB::table('orders')->insert([
-                    'customer_id' => $customerId,
-                    'rate_id' => $rateId,            
-                    'amount' => $purchaseAmount,
-                    'surcharge' => $surchargeAmount,
-                    'total'=> $total,
-                ]);
-            }
-        }
-        
-         */
     }
 }

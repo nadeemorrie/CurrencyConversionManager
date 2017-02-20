@@ -19,9 +19,10 @@ class CreateOrderTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('customer_id');            
             $table->unsignedSmallInteger('rate_id');  
-            $table->double('amount', 15,8);  
-            $table->double('surcharge', 15,8);  
-            $table->double('total', 15,8);  
+            $table->double('foreign_amount');  
+            $table->double('cost');  
+            $table->double('surcharge');  
+            $table->double('total');  
             $table->timestamps();
 
             $table->foreign('customer_id')->references('id')->on('customers');

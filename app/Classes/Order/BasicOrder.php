@@ -22,7 +22,7 @@ class BasicOrder extends Order {
      * @return int 
      */
 	public function getTotal () {		
-		return ($this->baseAmount + $this->surchargeAmount);
+		return round($this->baseAmount + $this->surchargeAmount, 2);
 	}
 }
 ?>

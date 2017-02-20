@@ -9,10 +9,9 @@
 <div ng-controller="orderController">
 
 	 {{-- {!! Form::open(['method' => 'PATCH', 'route' => ['event.update',$id]]) !!} --}}
-	<form class="form-horizontal">
+	<form class="form-horizontal" method="POST" action="{{route('order.store')}}">
 	{{-- <form method="POST" action="{{route('event.store')}}"> --}}
-	{{-- <form method="POST" action="{{url('/store')}}/result/competition/22" accept-charset="UTF-8"> --}}
-	<input name="_method" type="hidden" value="POST">
+	{{-- <form method="POST" action="{{url('/store')}}/result/competition/22" accept-charset="UTF-8"> --}}	
 	{!! csrf_field() !!}
 		<div class="form-group">
 			<div class="col-sm-2">
@@ -88,13 +87,13 @@
 				
 			</div>
 			<div class="col-sm-10">
-				<button type="submit" class="btn btn-primary" 
+				<button type="button" class="btn btn-primary" 
 				ng-click="data.calculateCurrency()" 
 				ng-disabled="data.validateFields()">Next</button>
 			</div>
 		</div>
 
-		<div ng-hide="false" class="row">
+		<div ng-hide="data.hideBuyDiv" class="row">
 			<div class="col-sm-2"></div>
 			<div class="col-sm-10">
 				<div class="well well-sm">
@@ -121,6 +120,24 @@
 								  	<dd>@{{data.selectedOption.baseCodeSymbol}}@{{data.total}}</dd>
 								</dl>
 							</div>
+							<div class="row">
+								<div class="form-group">
+									<div class="col-sm-2">
+										
+									</div>
+									<div class="col-sm-10">
+										{!! csrf_field() !!}
+										<input type="hidden" name="rateId" value="@{{data.selectedOption.id}}">
+										<input type="hidden" name="surcharge" value="@{{data.surcharge}}">
+										<input type="hidden" name="cost" value="@{{data.cost}}">
+										<input type="hidden" name="total" value="@{{data.total}}">
+										<input type="hidden" name="foreignAmount" value="@{{data.foreignAmount}}">
+										<input type="hidden" name="customerName" value="@{{data.fullname}}">
+										<input type="hidden" name="customerEmail" value="@{{data.email}}">
+										<button type="submit" class="btn btn-success">Buy</button>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -128,5 +145,4 @@
 		</div>				
 	</form>
 </div>
-
 @stop
