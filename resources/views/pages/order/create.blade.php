@@ -54,7 +54,7 @@
 			
 			<div class="col-sm-10">
 				<select class="form-control" name="inputCurrency" id="inputCurrency" 
-				     ng-options="option.name for option in data.options track by option.id" 
+				     ng-options="option.currencyName for option in data.options track by option.id" 
 					 ng-model="data.selectedOption">			    
 				</select>
 			</div>
@@ -70,7 +70,7 @@
 				</label>
 				<label class="radio-inline">
 				  <input type="radio" name="buyIn" id="buyInForeignCurrency" value="true" 
-				  ng-model="data.isForeign">Foreign Currency (@{{data.selectedOption.name}})
+				  ng-model="data.isForeign">Foreign Currency (@{{data.selectedOption.currencyName}})
 				</label>			
 			</div>
 		</div>
@@ -90,7 +90,7 @@
 			<div class="col-sm-10">
 				<button type="submit" class="btn btn-primary" 
 				ng-click="data.calculateCurrency()" 
-				ng-disabled="data.validateFields()">Proceed</button>
+				ng-disabled="data.validateFields()">Next</button>
 			</div>
 		</div>
 
@@ -101,19 +101,24 @@
 					<div class="panel panel-default">
 						<div class="panel-body">
 							<div class="row">					    
-								<div class="col-sm-12"><h4>Purchase details</h4></div>
+								<div class="col-sm-12"><h4>Order..</h4></div>
 							</div>
 							<div class="row">
 								<dl class="dl-horizontal">
 								  <dt>Currency</dt>
-								  	<dd>@{{data.selectedOption.code}} (@{{data.selectedOption.name}})</dd>
-								  <dt>@{{data.selectedOption.code}} amount</dt>
-								  	<dd>@{{data.selectedOption.symbol}}</dd>
+								  	<dd>@{{data.selectedOption.code}} (@{{data.selectedOption.currencyName}})</dd>
+								  <dt>Buy </dt>
+								  	<dd>@{{data.selectedOption.symbol}}@{{data.foreignAmount}}</dd>
 								  <dt>Exchange Rate</dt>
-								  	<dd>@{{data.exchangeRate}}</dd>
-								  <dt>Cost amount</dt><dd>...</dd>
-								  <dt>Surcharge</dt><dd>...</dd>
-								  <dt>Total</dt><dd>...</dd>
+								  	<dd>@{{data.selectedOption.exchangeRate}}</dd>
+								</dl>
+								<dl class="dl-horizontal">
+								  <dt>Cost (@{{data.selectedOption.baseCode}})</dt>
+								  	<dd>@{{data.selectedOption.baseCodeSymbol}}@{{data.cost}}</dd>
+								  <dt>Surcharge (@{{data.selectedOption.baseCode}})</dt>
+								  	<dd>@{{data.selectedOption.baseCodeSymbol}}@{{data.surcharge}}</dd>
+								  <dt>Total (@{{data.selectedOption.baseCode}})</dt>
+								  	<dd>@{{data.selectedOption.baseCodeSymbol}}@{{data.total}}</dd>
 								</dl>
 							</div>
 						</div>

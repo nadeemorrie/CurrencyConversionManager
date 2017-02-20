@@ -21,13 +21,8 @@ class BasicOrder extends Order {
      *        
      * @return int 
      */
-	public function getCost ($buyAmount, $isForeign) {
-		$this->setAmount($buyAmount, $isForeign);
-		return ($this->getBaseAmount() + $this->getSurchageAmount());
-	}
-
-	public function getConvertedForeignAmount ($amount) {
-		return ($this->getForeignAmount($amount));
+	public function getTotal () {		
+		return ($this->baseAmount + $this->surchargeAmount);
 	}
 }
 ?>

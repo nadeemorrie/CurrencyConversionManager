@@ -18,9 +18,9 @@ class BuyCurrencyController extends Controller
      */
     public function create()
     {
-    	$order = new BasicOrder(13.0947, 0);
-        $order->getCost(100, false);
-		$order->getConvertedForeignAmount(100);
+  //   	$order = new BasicOrder(13.0947, 0);
+  //       $order->getTotal(100, false);
+		// $order->getConvertedForeignAmount(100);
 
         return view('pages.order.create', ['user' => 'nadeem']);
     }

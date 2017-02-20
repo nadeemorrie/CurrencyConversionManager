@@ -18,17 +18,23 @@
 
 var app = angular.module('myApp', []);
 
+var selectDefaultText = 'Select a currency';
+
 app.controller('orderController', function($scope, $http, $location, $timeout) {	
 	$scope.data = {
 		amount : 100,
+		foreignAmount : 0,
+		cost : 0,
+		surcharge : 0,
+		total : 0,
 		fullname : 'nadeem orrie',
 		email : 'nadeem.orrie@gmail.com',
 		isForeign : '',
 		currencies : null,
 		exchangeRate : 0,
 		options : [],
-		buttonDisabled : false,
-		selectedOption : {id:0, name:'Select a currency'},
+		buttonDisabled : false,		
+		selectedOption : { id:0, currencyName:selectDefaultText},
 		selectedCurrencyName : null,
 		validateFields : function () {
 			this.buttonDisabled=false;
@@ -41,7 +47,7 @@ app.controller('orderController', function($scope, $http, $location, $timeout) {
 			return this.buttonDisabled;
 		},
 		hasCurrency : function () {
-			if (this.selectedOption.name=='Select a currency') {
+			if (this.selectedOption.currencyName==selectDefaultText) {
 				this.buttonDisabled=true;
 			}			
 		},
@@ -80,13 +86,17 @@ app.controller('orderController', function($scope, $http, $location, $timeout) {
 			  data : {
 			  	_token: csrfToken,			  	
 			  	amount : this.amount,
-			  	isForeign : this.isForeign
+			  	isForeign : this.isForeign,
+			  	exchangeRate : this.selectedOption.exchangeRate,
+			  	surchargeRate : this.selectedOption.surchargeRate
 			  }
-			}).then(function successCallback(response) {
-				// alert(response.data);
-				$scope.data.exchangeRate = response.data.exchangeRate;				
+			}).then(function successCallback(response) {				
+				$scope.data.surcharge = response.data.surcharge;				
+				$scope.data.cost = response.data.cost;				
+				$scope.data.total = response.data.total;				
+				$scope.data.foreignAmount = response.data.foreignAmount;				
 			  }, function errorCallback(response) {
-				alert('error');
+				console.log('Convert api call failed');
 			  });
 		}
 
@@ -97,12 +107,19 @@ app.controller('orderController', function($scope, $http, $location, $timeout) {
 	// console.log(GetCurrencyName(2));
 
 	function loadList () {			
-		$http.get(baseurl+'/api/currency')
-			.then(function successCallback(response) {
-			    $scope.data.currencies = response.data;		    
-			    
-			    loadSelectList();
-			});
+			$http({
+			  method: 'POST',			  
+			  url: baseurl+'/api/currency/list',
+			  data : {
+			  	_token: csrfToken,		  	
+			  	currencyCode : 'USD'
+			  }
+			}).then(function successCallback(response) {				
+				$scope.data.currencies = response.data;
+				loadSelectList();
+			  }, function errorCallback(response) {
+				console.log('currency load list failed');
+			  });
 	}
 
 	function loadSelectList() {		
@@ -111,8 +128,6 @@ app.controller('orderController', function($scope, $http, $location, $timeout) {
 		$scope.data.options = _.sortBy($scope.data.options, 'id');
 		console.log('options', $scope.data.options);
 	}
-
-
 	
 });
 

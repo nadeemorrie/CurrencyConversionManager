@@ -33,12 +33,18 @@
             .title {
                 font-size: 96px;
             }
+
+            .sub-title {
+                font-size: 46px;
+                text-align: right;
+            }
         </style>
     </head>
     <body>
         <div class="container">
             <div class="content">
-                <div class="title">Laravel 5</div>
+                <div class="title">Currency Manager</div>
+                <div class="sub-title"><a href="{{url('order/create')}}">Create Order</a></div>
             </div>
         </div>
     </body>

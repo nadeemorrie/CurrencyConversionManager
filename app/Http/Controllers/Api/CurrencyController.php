@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 
 use App\Currency;
 use App\Classes\Order\BasicOrder;
+use DB;
 
 
 class CurrencyController extends Controller
@@ -18,9 +19,19 @@ class CurrencyController extends Controller
      *
      * @return model
      */
-    public function getIndex()
+    public function postList(Request $request)
     {
-        $currencies = Currency::get();
+        $sql = "select ";
+        $sql .=" c.id, c.baseCode, c.baseCodeSymbol, c.code, c.symbol, c.name as currencyName, ";
+        $sql .=" r.exchange as exchangeRate, r.surcharge surchargeRate, r.surcharge_percent ";
+        $sql .=" from currency c ";
+        $sql .=" inner join rates r ";
+        $sql .=" on c.id = r.currency_id ";
+        $sql .=" where c.baseCode = '".$request->currencyCode."' ";
+
+        $currencies = DB::select($sql); 
+
+        // $currencies = Currency::get();
 
         return $currencies;
     }
@@ -32,22 +43,37 @@ class CurrencyController extends Controller
      */
     public function postConvert(Request $request)
     {
-        $buyAmount=$request->amount;
-        $isForeign = $request->isForeign;
+        // Fetch form inputs
+        $inputAmount=$request->amount;
+        $isForeign = $request->isForeign === 'true' ? true: false;
+        $exchangeRate = $request->exchangeRate;
+        $surchargeRate = $request->surchargeRate;
+        
+        // create a new order class to calculate the costs
+        $order = new BasicOrder($exchangeRate, $surchargeRate);
+        
+        // set the basee amount. isForeign flag to determine if currency must
+        // be converted to base currency.        
+        $order->setBaseAmount($inputAmount, $isForeign);
+        $baseAmount = $order->getBaseAmount();
 
-        // $surchargeRate
-        // $exchangeRate
+        // convert the currency        
+        $order->setForeignAmount($inputAmount, $isForeign);        
+        $foreignAmount = $order->getForeignAmount();
+        
+        // get the surcharge amount
+        $order->setSurchargeAmount($baseAmount);
+        $surcharge=$order->getSurchargeAmount();
 
-        $rate = 13.0947;
-        $order = new BasicOrder(13.0947, 0);
-        $cost = $order->getCost($buyAmount, $isForeign);
-        $foreignAmount = $order->getConvertedForeignAmount($buyAmount);
+        // get the total cost
+        $total = $order->getTotal();
 
         return collect(
             [
-                'cost'=>$cost,
-                'foreignAmount'=>$foreignAmount,
-                'exchangeRate'=>$rate             
+                'foreignAmount'=>$foreignAmount,              
+                'cost'=>$baseAmount,
+                'surcharge'=>$surcharge,
+                'total'=>$total                
             ]);
     }
 

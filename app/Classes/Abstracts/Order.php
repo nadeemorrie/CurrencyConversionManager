@@ -7,9 +7,10 @@ abstract class Order {
 	protected $foreignAmount;
 	protected $baseAmount;	
 	protected $surchargeRate;
+	protected $surchargeAmount;
 	protected $total;		
 
-	protected abstract function getCost($buyAmount, $isForeign);
+	protected abstract function getTotal();
 
 	/**
      * Get the exchange rate amount for conversion
@@ -30,35 +31,29 @@ abstract class Order {
 	}
 	
 	/**
-     * Calculate surchage amount using the surcharge rate.
-     *            
-     * @return int 
+     * Calculate and set surchage amount using the surcharge rate.
+     *                 
      */
-	protected function getSurchageAmount() {		
-		return $this->baseAmount * $this->surchargeRate;
+	public function setSurchargeAmount($baseAmount) {		
+		$this->surchargeAmount = round($baseAmount * $this->surchargeRate, 2);
 	}
 
 	/**
-	 * Set the base amount.
-     * Determine if the base amount must be converted from
-     * a foreign input amount to the base currency. i.e ZAR to USD.
-     * @param int $buyAmount 
-     * @param bool $isForeign           
+     * Get surchage amount using the surcharge rate.
+     *            
+     * @return float 
      */
-	protected function setAmount($buyAmount, $isForeign) {		
-		if ($isForeign)
-			return $this->convertToBaseCurrencyAmount($buyAmount);
-
-		return $this->setBaseAmount($buyAmount);
+	public function getSurchargeAmount() {		
+		return $this->surchargeAmount;
 	}
 
 	/**
      * Convert amount from foreign to base currency amount. i.e ZAR to USD
      *            
-     * @return int 
+     * @return float 
      */
 	protected function convertToBaseCurrencyAmount($amount) {		
-		$this->baseAmount = $amount / $this->exchangeRate;
+		return round($amount / $this->exchangeRate, 2);
 	}
 
 	/**
@@ -67,54 +62,54 @@ abstract class Order {
      * @return string
      */
 	protected function convertToForeignCurrencyAmount ($amount) {
-		return $amount * $this->exchangeRate;
+		return round($amount * $this->exchangeRate, 2);
+	}
+
+	/**
+     * Get foreing amount
+     *            
+     * @return float 
+     */
+	public function getForeignAmount() {		
+		return $this->foreignAmount;
+	}
+
+	/**
+     * Set the foreign amount 
+     *
+     * @return float
+     */
+	public function setForeignAmount($amount, $isForeign) {
+		if ($isForeign) {
+			$this->foreignAmount = round($amount, 2);
+			return;
+		}			
+		$this->foreignAmount = $this->convertToForeignCurrencyAmount($amount);
 	}
 
 	/**
      * Set base amount
      *            
-     * @return int 
+     * @return float 
      */
-	protected function setBaseAmount($amount) {		
-		$this->baseAmount = $amount;
-	}
-
-	/**
-     * Get the base amount 
-     *
-     * @param decimal
-     */
-	protected function getBaseAmount() {
+	public function getBaseAmount() {		
 		return $this->baseAmount;
 	}
 
 	/**
-     * Get the foreign amount 
+     * Set the base amount based on user input. If its the foreign amount, it needs to 
+     * be converted to the base currency amount
      *
-     * @return decimal
+     * @return float
      */
-	protected function getForeignAmount($amount) {			
-		return $this->foreignAmount = $this->convertToForeignCurrencyAmount($amount);
-		
+	public function setBaseAmount($amount, $isForeign) {
+		if ($isForeign) {
+			$this->baseAmount = $this->convertToBaseCurrencyAmount($amount);
+			return;		
+		}
+		$this->baseAmount = $amount;
 	}
 
-	/**
-     * Set the total amount to be paid.
-     *            
-     * @return int 
-     */
-	protected function setTotal($amount) {		
-		$this->total = $amount;
-	}
-
-	/**
-     * Get the total amount to be paid.
-     *            
-     * @return int 
-     */
-	protected function getTotal() {			
-		return $this->total;
-	}
 }
 
 ?>
