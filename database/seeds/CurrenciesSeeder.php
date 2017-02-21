@@ -10,8 +10,7 @@ class CurrenciesSeeder extends Seeder
      * @return void
      */
     public function run()
-    {
-        
+    {   
         $currencyArray = [[
             'id'=>1,
             'baseCode'=>'USD',
@@ -116,5 +115,24 @@ class CurrenciesSeeder extends Seeder
 
         DB::table('rates')->insert($ratesArray);
 
+
+        $actionsArray = [[
+                    'currency_id' => 1,
+                    'type' => NULL,
+                    'discount' => NULL,
+                    'email' => NULL
+                ], [
+                    'currency_id' => 2,
+                    'type' => 'email',
+                    'discount' => NULL,
+                    'email' => 'nadeem.orrie@gmail.com'
+                ],[
+                    'currency_id' => 3,
+                    'type' => 'discount',
+                    'discount' => 0.10,
+                    'email' => NULL
+                ]];
+
+        DB::table('actions')->insert($actionsArray);
     }
 }

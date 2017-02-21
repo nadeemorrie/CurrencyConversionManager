@@ -8,11 +8,9 @@
 
 <div ng-controller="orderController">
 
-	 {{-- {!! Form::open(['method' => 'PATCH', 'route' => ['event.update',$id]]) !!} --}}
-	<form class="form-horizontal" method="POST" action="{{route('order.store')}}">
-	{{-- <form method="POST" action="{{route('event.store')}}"> --}}
-	{{-- <form method="POST" action="{{url('/store')}}/result/competition/22" accept-charset="UTF-8"> --}}	
-	{!! csrf_field() !!}
+	 
+	<form class="form-horizontal" method="POST" action="{{route('order.store')}}">	
+		{!! csrf_field() !!}
 		<div class="form-group">
 			<div class="col-sm-2">
 				
@@ -127,7 +125,10 @@
 									</div>
 									<div class="col-sm-10">
 										{!! csrf_field() !!}
-										<input type="hidden" name="rateId" value="@{{data.selectedOption.id}}">
+										<input type="hidden" name="currencyId" value="@{{data.selectedOption.id}}">
+										<input type="hidden" name="currencyCode" value="@{{data.selectedOption.code}}">
+										<input type="hidden" name="currencyBaseCode" value="@{{data.selectedOption.baseCode}}">
+										<input type="hidden" name="rateId" value="@{{data.selectedOption.rateId}}">
 										<input type="hidden" name="surcharge" value="@{{data.surcharge}}">
 										<input type="hidden" name="cost" value="@{{data.cost}}">
 										<input type="hidden" name="total" value="@{{data.total}}">

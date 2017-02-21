@@ -22,6 +22,7 @@ class CreateOrderTable extends Migration
             $table->double('foreign_amount');  
             $table->double('cost');  
             $table->double('surcharge');  
+            $table->double('discount')->nullable()->default(NULL);  
             $table->double('total');  
             $table->timestamps();
 

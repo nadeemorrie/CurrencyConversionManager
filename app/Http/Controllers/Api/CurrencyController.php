@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers\Api;
 
+// Internal classes
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
-use App\Currency;
-use App\Classes\Order\BasicOrder;
 use DB;
+
+// Models
+use App\Currency;
+
+// Custom classes
+use App\Classes\Order\BasicOrder;
 
 
 class CurrencyController extends Controller
@@ -23,7 +26,7 @@ class CurrencyController extends Controller
     {
         $sql = "select ";
         $sql .=" c.id, c.baseCode, c.baseCodeSymbol, c.code, c.symbol, c.name as currencyName, ";
-        $sql .=" r.exchange as exchangeRate, r.surcharge surchargeRate, r.surcharge_percent ";
+        $sql .=" r.id rateId, r.exchange as exchangeRate, r.surcharge surchargeRate, r.surcharge_percent ";
         $sql .=" from currency c ";
         $sql .=" inner join rates r ";
         $sql .=" on c.id = r.currency_id ";

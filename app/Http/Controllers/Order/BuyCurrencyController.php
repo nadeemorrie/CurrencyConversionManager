@@ -2,15 +2,22 @@
 
 namespace App\Http\Controllers\Order;
 
+// Internal classes
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use DB;
 
-use App\Classes\Order\BasicOrder;
+// Models
 use App\Order;
 use App\Customer;
-use DB;
+use App\Currency;
+
+// Custom Classes
+use App\Classes\Order\BasicOrder;
+use App\Classes\Action\EmailAction;
+use App\Classes\Action\DiscountAction;
+
 
 class BuyCurrencyController extends Controller
 {
@@ -33,13 +40,24 @@ class BuyCurrencyController extends Controller
      */
     public function store(Request $request)
     {
+        //Declare variables
         $customerId = null;
+        
+        // Get currency details
+        $currency = Currency::find($request->currencyId);
+        
+        // parameters required for discount check
+        $discountParams = array(
+            "baseCode"=>$currency->baseCode, 
+            "currencyCode"=>$currency->code,
+            "type"=>"discount"
+         );
 
-        // get single customer if exists        
-        $existingCustomer = Customer::where('email', $request->customerEmail)->first();
+        // Get an existing customer if it exists       
+        $isOldCustomer = Customer::where('email', $request->customerEmail)->first();
 
-        //save a new customer
-        if (!$existingCustomer) {
+        if (!$isOldCustomer) {
+            //create a new customer
             $customer = new Customer;
 
             $customer->name = $request->customerName;
@@ -50,10 +68,11 @@ class BuyCurrencyController extends Controller
             $customerId = $customer->id;
         }
 
-        if ($existingCustomer) {
-            $customerId = $existingCustomer->id;
+        if ($isOldCustomer) {
+            $customerId = $isOldCustomer->id;
         }
 
+        // create the new order
         $order = new Order;
 
         $order->customer_id = $customerId;
@@ -61,10 +80,16 @@ class BuyCurrencyController extends Controller
         $order->foreign_amount = $request->foreignAmount;
         $order->cost = $request->cost;
         $order->surcharge = $request->surcharge;
-        $order->total = $request->total;
+
+        // check if the currency applies for a discount and apply the discount.               
+        $totalsArray = (new DiscountAction($request->total))->run($discountParams);
+
+        $order->discount = $totalsArray["discount"];
+        $order->total = $totalsArray["total"];
 
         $order->save();
-       
+
+        // show the user the details on a new page
         return redirect()->route('order.show',['id'=>$order->id]);
     }
 
@@ -75,8 +100,17 @@ class BuyCurrencyController extends Controller
      */
     public function show($id)
     {
+        $emailParams = array(
+            "baseCode"=>"USD", 
+            "currencyCode"=>"ZAR",
+            "type"=>"email"
+         );
+
+        (new EmailAction)->run($emailParams);
+
         $sql=" select ";
-        $sql.="c.name customer_name,c.email, o.foreign_amount, o.cost, o.surcharge, o.total, o.created_at, ";
+        $sql.="c.name customer_name,c.email, ";
+        $sql.="o.discount, o.foreign_amount, o.cost, o.surcharge, o.total, o.created_at, ";
         $sql.="y.baseCode, y.baseCodeSymbol, y.code currencyCode, y.name currencyName, y.symbol, ";
         $sql.="r.exchange, r.surcharge_percent ";
         $sql.="from orders o ";
@@ -95,6 +129,7 @@ class BuyCurrencyController extends Controller
         $foreignAmount = 0;
         $cost = 0;
         $surcharge = 0;
+        $discount = 0;
         $total = 0;
         $createdAt = "";
 
@@ -102,6 +137,7 @@ class BuyCurrencyController extends Controller
             $customerName = $value->customer_name;
             $customerEmail = $value->email;
             $foreignAmount = $value->foreign_amount;
+            $discount = $value->discount;
             $cost = $value->cost;
             $surcharge = $value->surcharge;
             $total = $value->total;
@@ -120,7 +156,7 @@ class BuyCurrencyController extends Controller
         return view('pages.order.show')->with(
             compact(
                 'customerName', 'customerEmail', 'foreignAmount',
-                'cost', 'surcharge', 'total', 'createdAt', 'foreignCurrencyCode',
+                'discount', 'cost', 'surcharge', 'total', 'createdAt', 'foreignCurrencyCode',
                 'exchangeRate', 'surchargePercent', 'currencyPurchased', 'currencyPurchasedSymbol',
                 'total', 'surchage', 'baseCode','baseCodeSymbol', 'createdAt'
                 )

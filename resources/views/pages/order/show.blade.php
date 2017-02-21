@@ -33,6 +33,10 @@
 			    	<dd>{{$baseCodeSymbol}}{{$cost}}</dd>
 			    <dt>Surcharge ({{$baseCode}}):</dt>
 			    	<dd>{{$baseCodeSymbol}}{{$surcharge}}</dd>
+			    @if ($discount)
+			    <dt>Discount ({{$baseCode}}):</dt>
+			    	<dd>{{$baseCodeSymbol}}-{{$discount}}</dd>
+			    @endif
 			    <dt>Total ({{$baseCode}}):</dt>
 			    	<dd>{{$baseCodeSymbol}}{{$total}}</dd>
 			</dl>

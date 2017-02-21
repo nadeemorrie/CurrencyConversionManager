@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Customer extends Model
 {
     /**
-     * example, pentathlon, masters, heptathlon, senior, U23 ect.
+     * 
      *
      * @var string
      */
