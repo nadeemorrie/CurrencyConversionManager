@@ -41,7 +41,7 @@ class BuyCurrencyController extends Controller
     public function store(Request $request)
     {
         //Declare variables
-        $customerId = null;
+        $customerId = null;        
         
         // Get currency details
         $currency = Currency::find($request->currencyId);
@@ -52,6 +52,12 @@ class BuyCurrencyController extends Controller
             "currencyCode"=>$currency->code,
             "type"=>"discount"
          );
+        // parameters required for email
+        $emailParams = array(
+            "baseCode"=>$currency->baseCode, 
+            "currencyCode"=>$currency->code,
+            "type"=>"email"
+        );
 
         // Get an existing customer if it exists       
         $isOldCustomer = Customer::where('email', $request->customerEmail)->first();
@@ -81,13 +87,16 @@ class BuyCurrencyController extends Controller
         $order->cost = $request->cost;
         $order->surcharge = $request->surcharge;
 
-        // check if the currency applies for a discount and apply the discount.               
+        // check if the currency action required is to apply a discount.
         $totalsArray = (new DiscountAction($request->total))->run($discountParams);
 
         $order->discount = $totalsArray["discount"];
         $order->total = $totalsArray["total"];
 
         $order->save();
+
+        // check if the currency action required is to send an email.
+        (new EmailAction)->run($emailParams);
 
         // show the user the details on a new page
         return redirect()->route('order.show',['id'=>$order->id]);
@@ -100,14 +109,6 @@ class BuyCurrencyController extends Controller
      */
     public function show($id)
     {
-        $emailParams = array(
-            "baseCode"=>"USD", 
-            "currencyCode"=>"ZAR",
-            "type"=>"email"
-         );
-
-        (new EmailAction)->run($emailParams);
-
         $sql=" select ";
         $sql.="c.name customer_name,c.email, ";
         $sql.="o.discount, o.foreign_amount, o.cost, o.surcharge, o.total, o.created_at, ";
