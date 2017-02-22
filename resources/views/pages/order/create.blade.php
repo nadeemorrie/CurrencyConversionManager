@@ -87,7 +87,7 @@
 			<div class="col-sm-10">
 				<button type="button" class="btn btn-primary" 
 				ng-click="data.calculateCurrency()" 
-				ng-disabled="data.validateFields()">Next</button>
+				ng-disabled="data.validateFields()">Calculate</button>
 			</div>
 		</div>
 

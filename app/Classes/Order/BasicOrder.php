@@ -9,7 +9,7 @@ class BasicOrder extends Order {
 	/**
      * Constructor to initialise variables
      *            
-     * @param float $exchangeRate, float $surchargeRate, int $buyAmount
+     * @param float $exchangeRate, float $surchargeRate
      */
 	function __construct($exchangeRate, $surchargeRate) {
 		$this->exchangeRate = $exchangeRate;
@@ -17,12 +17,13 @@ class BasicOrder extends Order {
 	}
 
 	/**
-     * Total amount to pay
+     * Calculate the total amount to pay
      *        
-     * @return int 
+     * @return float 
      */
 	public function getTotal () {		
 		return round($this->baseAmount + $this->surchargeAmount, 2);
 	}
+
 }
 ?>

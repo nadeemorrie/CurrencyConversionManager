@@ -13,6 +13,11 @@ class EmailAction extends Action {
 	
 	}
 
+	/**
+     * Email a user as configured in the currency action table
+     *
+     * @var array $actions     
+     */
 	protected function process($actions) {		
 		//if no actions found then exit function
 		if (!$actions)
@@ -25,7 +30,7 @@ class EmailAction extends Action {
 		{
 			// very basic email. works with mandril, see .env config
 			$result = Mail::send(
-				'emails.notice',
+				'emails.order.notice',
 				['currencyName' => $currencyName],
 				function ($m) use ($emails, $currencyName) {
 		            $m->from(ENV('APP_WEBMASTER_EMAIL'), ENV('APP_WEBMASTER_NAME'));

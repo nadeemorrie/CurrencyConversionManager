@@ -18,9 +18,9 @@ use App\Classes\Order\BasicOrder;
 class CurrencyController extends Controller
 {
     /**
-     * Api to fetches a list of currencies     
+     * Api to fetches a list of currencies and its rates    
      *
-     * @return model
+     * @return array $currencies
      */
     public function postList(Request $request)
     {
@@ -40,9 +40,9 @@ class CurrencyController extends Controller
     }
 
     /**
-     * Api to fetches a list of currencies     
+     * Api to calculate totals
      *
-     * @return model
+     * @return collection totals
      */
     public function postConvert(Request $request)
     {        

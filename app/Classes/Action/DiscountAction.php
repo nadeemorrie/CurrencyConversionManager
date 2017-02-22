@@ -12,6 +12,12 @@ class DiscountAction extends Action {
 		$this->total = $total;
 	}
 
+	/**
+     * Calculate the discount, instruction configured in action table
+     *
+     * @var array $actions
+     * @return array
+     */
 	protected function process($actions) {
 		
 		//if no actions found then return zero

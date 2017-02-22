@@ -1,34 +1,16 @@
-// var publicServicePulitzers = [
-// {year: 1918, newsroom: "The New York Times",
-//   reason: "For its public service in publishing in full so many official reports, documents and speeches by European statesmen relating to the progress and conduct of the war."},
-//   {year: 1919, newsroom: "Cape Town",
-//   reason: "Test"}
-// ];
-// var findValue = {id: 2};
-// var hay =[
-// 			{id:2,name:"nadeem"}
-			
-// 		];
-
-// var xxx = _.findWhere(hay, findValue);
-// console.log('result', xxx);
-
-// var result = _.findWhere(publicServicePulitzers, {year: 1919});
-
-
 var app = angular.module('myApp', []);
 
 var selectDefaultText = 'Select a currency';
 
 app.controller('orderController', function($scope, $http, $location, $timeout) {	
 	$scope.data = {
-		amount : 100,
+		amount : 0,
 		foreignAmount : 0,
 		cost : 0,
 		surcharge : 0,
 		total : 0,
-		fullname : 'nadeem orrie',
-		email : 'nadeem.orrie@gmail.com',
+		fullname : '',
+		email : '',
 		isForeign : '',
 		currencies : null,
 		exchangeRate : 0,
@@ -74,7 +56,7 @@ app.controller('orderController', function($scope, $http, $location, $timeout) {
 			return '';
 		},
 		hasAmount : function () {
-			if (!angular.isNumber(this.amount)) {
+			if (!angular.isNumber(this.amount) || this.amount==0) {
 				this.buttonDisabled=true;
 				return 'has-error';
 			}
@@ -104,35 +86,11 @@ app.controller('orderController', function($scope, $http, $location, $timeout) {
 			  	$scope.data.setHideBuyDiv(true);
 				alert('Convert api call failed');
 			  });
-		}
-		// storeOrder : function () {
-		// 	$http({
-		// 	  method: 'POST',			  
-		// 	  url: baseurl+'/order',
-		// 	  data : {
-		// 	  	_token: csrfToken,			  	
-		// 	  	isForeign : this.isForeign,
-		// 	  	exchangeRate : this.selectedOption.exchangeRate,
-		// 	  	surchargeRate : this.selectedOption.surchargeRate,			  		  			
-		// 	  	surcharge : this.surcharge,
-		// 		cost : this.cost,				
-		// 		total : this.total,
-		// 		foreignAmount : this.foreignAmount,
-		// 		customerName : this.fullname,
-		// 		customerEmail : this.email
-		// 	  }
-		// 	}).then(function successCallback(response) {
-		// 		console.log('Store order success');							
-		// 	  }, function errorCallback(response) {			  	
-		// 		console.log('Store api call failed');
-		// 	  });
-		// }		
+		}		
 	}
 	
 	loadList();
 	
-	// console.log(GetCurrencyName(2));
-
 	function loadList () {			
 			$http({
 			  method: 'POST',			  
@@ -145,15 +103,14 @@ app.controller('orderController', function($scope, $http, $location, $timeout) {
 				$scope.data.currencies = response.data;
 				loadSelectList();
 			  }, function errorCallback(response) {
-				console.log('currency load list failed');
+				alert('currency load list failed');
 			  });
 	}
 
 	function loadSelectList() {		
 		$scope.data.options = $scope.data.currencies;
 		$scope.data.options.push($scope.data.selectedOption);
-		$scope.data.options = _.sortBy($scope.data.options, 'id');
-		console.log('options', $scope.data.options);
+		$scope.data.options = _.sortBy($scope.data.options, 'id');		
 	}
 	
 });

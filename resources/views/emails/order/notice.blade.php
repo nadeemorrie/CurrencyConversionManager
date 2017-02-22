@@ -5,6 +5,5 @@ The following currency was purchased:
 {{$currencyName}}
 <br><br>
 Kind Regards
+<br>
 Admin
-
-
