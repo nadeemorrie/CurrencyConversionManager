@@ -19,16 +19,16 @@ Clone the git repo into your "Code" directory.
 
 Linux/Mac
 
-<addr>$ git clone https://github.com/nadeemorrie/CurrencyConversionManager.git
+<addr>$ git clone https://github.com/nadeemorrie/CurrencyConversionManager.git</addr>
 
 ##
 
 ### Install dependencies
 
 Open the CurrencyConversionManager folder
-
+```
 $ cd CurrencyConversionManager/
-
+```
 Laravel utilizes Composer to manage its dependencies. So, before using Laravel, make sure you have Composer installed on your machine.
 
 Run composer update
