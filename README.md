@@ -41,7 +41,7 @@ The repo/project ships with a Vagrantfile allowing you to run vagrant per projec
 
 ### Install homestead
 
-Install vagrant virtual machiune Homestead.
+Install vagrant virtual machine Homestead.
 ```
 $ cd CurrencyConversionManager/
 $ php vendor/bin/homestead make
@@ -52,7 +52,7 @@ $ php vendor/bin/homestead make
 
 The default virtual server runs on 192.168.10.10. see Homestead.yaml. you can change this ip to anything you like.
 
-Add the ip in your hosts file. use any editor of your choice.
+Configure the IP address in your hosts file. Use any editor of your choice.
 ```
 $ vi /etc/hosts
 ```
