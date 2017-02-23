@@ -41,7 +41,7 @@ The repo/project ships with a Vagrantfile allowing you to run vagrant per projec
 
 ### Install homestead
 
-Install vagrant virtual maching Homestead.
+Install vagrant virtual machiune Homestead.
 ```
 $ cd CurrencyConversionManager/
 $ php vendor/bin/homestead make
@@ -76,7 +76,7 @@ Once logged in via ssh
 ```
 $ cd currencyconversionmanager
 ```
-create the database
+Create the database
 ```
 $ php artisan migrate
 ```
