@@ -12,14 +12,14 @@ Download and install the DEB or DMG file: (https://www.vagrantup.com/downloads.h
 
 ##
 
-### Download the code (v1.9.1)
-Create a "Code" directory in your home dirctory.
+### Download the repo
+Create a "Code" directory in your home directory.
 
 Clone the git repo into your "Code" directory.
 
 Linux/Mac
 
-$ git clone https://github.com/nadeemorrie/CurrencyConversionManager.git
+<addr>$ git clone https://github.com/nadeemorrie/CurrencyConversionManager.git
 
 ##
 
