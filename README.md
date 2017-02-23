@@ -18,9 +18,9 @@ Create a "Code" directory in your home directory.
 Clone the git repo into your "Code" directory.
 
 Linux/Mac
-
-<addr>$ git clone https://github.com/nadeemorrie/CurrencyConversionManager.git</addr>
-
+```
+$ git clone https://github.com/nadeemorrie/CurrencyConversionManager.git
+```
 ##
 
 ### Install dependencies
@@ -32,9 +32,9 @@ $ cd CurrencyConversionManager/
 Laravel utilizes Composer to manage its dependencies. So, before using Laravel, make sure you have Composer installed on your machine.
 
 Run composer update
-
+```
 $ composer update
-
+```
 The repo/project ships with a Vagrantfile allowing you to run vagrant per project instead of globally.
 
 ##
@@ -42,11 +42,10 @@ The repo/project ships with a Vagrantfile allowing you to run vagrant per projec
 ### Install homestead
 
 Install vagrant virtual maching Homestead.
-
+```
 $ cd CurrencyConversionManager/
-
 $ php vendor/bin/homestead make
-
+```
 ##
 
 ### Edit hosts file
@@ -54,38 +53,37 @@ $ php vendor/bin/homestead make
 The default virtual server runs on 192.168.10.10. see Homestead.yaml. you can change this ip to anything you like.
 
 Add the ip in your hosts file. use any editor of your choice.
-
+```
 $ vi /etc/hosts
-
+```
 ** Set it to something like this: 192.168.10.10 dev.currency
 
 Finally, run vagrant from terminal
-
+```
 $ cd CurrencyConversionManager/
-
 $ vagrant up
-
+```
 ##
 
 ### Setup the database
 
 #### SSH into the VM.
+```
 $ cd CurrencyConversionManager/
-
 $ vagrant ssh
-
+```
 Once logged in via ssh
-
+```
 $ cd currencyconversionmanager
-
+```
 create the database
-
+```
 $ php artisan migrate
-
+```
 Populate database with data test data for the tables named currencies and actions.
-
+```
 $ php artisan db:seed
-
+```
 Finally, test the link: (http://dev.currency)
 
 ##
