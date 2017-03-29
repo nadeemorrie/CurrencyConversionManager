@@ -41,28 +41,28 @@ class CurrenciesSeeder extends Seeder
             'symbol'=>'KSh'
         ],[
             'id'=>5,
-            'baseCode'=>'RSA',
+            'baseCode'=>'ZAR',
             'baseCodeSymbol'=>'R',
             'name'=>'United Snakes Dollars',
             'code'=>'USD',
             'symbol'=>'$'
         ], [
             'id'=>6,
-            'baseCode'=>'RSA',
+            'baseCode'=>'ZAR',
             'baseCodeSymbol'=>'R',
             'name'=>'British Pound',
             'code'=>'GBP',
             'symbol'=>'£'
         ],[
             'id'=>7,
-            'baseCode'=>'RSA',
+            'baseCode'=>'ZAR',
             'baseCodeSymbol'=>'R',
             'name'=>'Euro',
             'code'=>'EUR',
             'symbol'=>'€'
         ],[
             'id'=>8,
-            'baseCode'=>'RSA',
+            'baseCode'=>'ZAR',
             'baseCodeSymbol'=>'R',
             'name'=>'Kenyan Shilling',
             'code'=>'KES',

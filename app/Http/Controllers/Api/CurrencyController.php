@@ -13,10 +13,20 @@ use App\Currency;
 
 // Custom classes
 use App\Classes\Order\BasicOrder;
+use App\Classes\Exchange\Rates;
 
 
 class CurrencyController extends Controller
 {
+    /**
+     * Api to fetches a list of currencies and its rates    
+     *
+     * @return json $rates
+     */
+    public function getRates()
+    {
+        return (new Rates)->fetchRates();        
+    }
     /**
      * Api to fetches a list of currencies and its rates    
      *

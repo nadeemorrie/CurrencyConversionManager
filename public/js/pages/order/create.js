@@ -16,9 +16,14 @@ app.controller('orderController', function($scope, $http, $location, $timeout) {
 		exchangeRate : 0,
 		hideBuyDiv: true,
 		options : [],
+		disableRateButton : false,
+		updateRatesText	: "Update rates",
+		updateRatesDate	: "",
+		updateRatesSuccess	: "",		
+		updateRatesError	: "",		
 		buttonDisabled : false,		
 		selectedOption : { id:0, currencyName:selectDefaultText},
-		selectedCurrencyName : null,
+		selectedCurrencyName : null,	
 		validateFields : function () {
 			this.buttonDisabled=false;
 			this.hasCurrency();
@@ -86,7 +91,30 @@ app.controller('orderController', function($scope, $http, $location, $timeout) {
 			  	$scope.data.setHideBuyDiv(true);
 				alert('Convert api call failed');
 			  });
-		}		
+		},
+		fetchRates : function () {
+			// init vars
+			this.disableRateButton = true;
+			this.updateRatesSuccess = '';
+			this.updateRatesError = '';
+			this.updateRatesText = 'Loading...';
+
+			// api request
+			$http({
+			  method: 'GET',			  
+			  url: baseurl+'/api/currency/rates',			  
+			}).then(function successCallback (response) {				
+				$scope.data.disableRateButton = false;
+				$scope.data.updateRatesText = 'Update rates';
+				$scope.data.updateRatesSuccess = response.data.success;
+				$scope.data.updateRatesError = response.data.error;
+				$scope.data.updateRatesDate = response.data.updated_at;
+			  }, function errorCallback (response) {			 	
+			  	$scope.data.disableRateButton = false;
+			  	$scope.data.updateRatesText = 'Retry update';
+			  	$scope.data.updateRatesError = response.data.error;
+			  });
+		}	
 	}
 	
 	loadList();

@@ -1,5 +1,21 @@
 # Currency Converter Manager
 
+## Description
+
+Quick program to emulate buying currencies. A conversion is done and surcharges or discounts calculated depending on the selected currency.
+
+```
+The purpose of this program is to demonstrate the use of an external API, Angular, Bootstrap, email(mailgun), MVC, database design and the template design pattern.
+```
+
+Demonstrates the following:
+-- Call to forex API to update currencies
+-- Utilises Angular
+-- Utilises Bootstrap
+-- Template design pattern (using Abstract classes, Inheritance)
+-- e-mail using mailgun
+-- MVC
+
 ### Framework used, Laravel (v5.4)
 
 ## Setup a local virtual dev environment
@@ -118,3 +134,9 @@ Browse to CurrencyConversionManager/App/Scripts/DB/currencyManager.sql
 
 ### DB Connection Settings
 The DB settings can be configured in the .env file.
+
+```
+DB_DATABASE=homestead
+DB_USERNAME=homestead
+DB_PASSWORD=secret
+```

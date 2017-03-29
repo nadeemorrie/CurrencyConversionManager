@@ -7,7 +7,7 @@
 			<meta id="token" name="token" value="{{ csrf_token() }}">
 			<meta name="keywords" content="Github Info, Commits" />
 			<meta name="description" content="List repos and commits for a logged in github user.">
-			<link rel="icon" type="image/x-icon" href="favicon.ico">
+			<link rel="icon" type="image/x-icon" href="{{url('favicon.ico')}}">
 			<title>Currency Manager</title>	
         	<link rel="stylesheet" href="{{url('css/app.css')}}">        	
         	<script src="{{url('js/all.js')}}"></script>

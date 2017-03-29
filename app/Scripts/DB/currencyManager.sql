@@ -74,7 +74,7 @@ CREATE TABLE `currency` (
 
 LOCK TABLES `currency` WRITE;
 /*!40000 ALTER TABLE `currency` DISABLE KEYS */;
-INSERT INTO `currency` VALUES (1,'USD','$','ZAR','R','South African Rand',NULL,NULL),(2,'USD','$','GBP','£','British Pound',NULL,NULL),(3,'USD','$','EUR','€','Euro',NULL,NULL),(4,'USD','$','KES','K','Kenyan Shilling',NULL,NULL),(5,'RSA','R','USD','$','United Snakes Dollars',NULL,NULL),(6,'RSA','R','GBP','£','British Pound',NULL,NULL),(7,'RSA','R','EUR','€','Euro',NULL,NULL),(8,'RSA','R','KES','K','Kenyan Shilling',NULL,NULL);
+INSERT INTO `currency` VALUES (1,'USD','$','ZAR','R','South African Rand',NULL,NULL),(2,'USD','$','GBP','£','British Pound',NULL,NULL),(3,'USD','$','EUR','€','Euro',NULL,NULL),(4,'USD','$','KES','K','Kenyan Shilling',NULL,NULL),(5,'ZAR','R','USD','$','United Snakes Dollars',NULL,NULL),(6,'ZAR','R','GBP','£','British Pound',NULL,NULL),(7,'ZAR','R','EUR','€','Euro',NULL,NULL),(8,'ZAR','R','KES','K','Kenyan Shilling',NULL,NULL);
 /*!40000 ALTER TABLE `currency` ENABLE KEYS */;
 UNLOCK TABLES;
 

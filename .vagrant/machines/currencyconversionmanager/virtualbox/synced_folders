@@ -1,0 +1,1 @@
+{"virtualbox":{"/home/vagrant/currencyconversionmanager":{"type":null,"mount_options":[],"guestpath":"/home/vagrant/currencyconversionmanager","hostpath":"/home/nadeem/Code/CurrencyConversionManager","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"/home/nadeem/Code/CurrencyConversionManager","disabled":false,"__vagrantfile":true}}}

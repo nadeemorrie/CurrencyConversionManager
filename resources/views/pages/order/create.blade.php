@@ -5,7 +5,6 @@
  {{-- Angular Code --}}
 <script src="{{url('js/pages/order/create.js')}}"></script>
 
-
 <div ng-controller="orderController">
 
 	 
@@ -35,13 +34,27 @@
 	      id="inputEmail" placeholder="Email">
 	    </div>
 	  </div>  
-
-		<div class="form-group">
+		
+	  <div class="form-group">
 			<div class="col-sm-2">
 				
 			</div>
-			<div class="col-sm-10">
+			<div class="col-sm-5">
 				<h4>Order</h4>
+			</div>
+			<div class="col-sm-5">
+				<div class="well well-sm">
+					<p class="bg-info text-center">Rates updated at: @{{data.updateRatesDate}}</p>
+					<p class="bg-error text-center">@{{data.updateRatesError}}</p>
+					<p class="bg-success text-center">@{{data.updateRatesSuccess}}</p>
+					<p class="text-center">
+						<button 
+							ng-click="data.fetchRates()" 
+							ng-disabled="data.disableRateButton" 
+							type="button" 
+							class="btn btn-success btn-xs">@{{data.updateRatesText}}</button>
+					</p>
+				</div>
 			</div>
 		</div>
 		{{-- @foreach ($test=@{{currencies}} as $data) 
