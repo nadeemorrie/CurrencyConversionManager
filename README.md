@@ -4,16 +4,22 @@
 
 Quick program to emulate buying currencies. A conversion is done and surcharges or discounts calculated depending on the selected currency.
 
-```
+
 The purpose of this program is to demonstrate the use of an external API, Angular, Bootstrap, email(mailgun), MVC, database design and the template design pattern.
-```
+
 
 Demonstrates the following:
+
 -- Call to forex API to update currencies
+
 -- Utilises Angular
+
 -- Utilises Bootstrap
+
 -- Template design pattern (using Abstract classes, Inheritance)
+
 -- e-mail using mailgun
+
 -- MVC
 
 ### Framework used, Laravel (v5.4)
